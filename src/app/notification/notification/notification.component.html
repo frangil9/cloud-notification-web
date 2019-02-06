@@ -1,0 +1,84 @@
+<div class="content-header">
+  <div class="align-header">
+    <div class="subtitle">
+      Administrar Notificaciones
+    </div>
+    <button mat-flat-button color="primary" routerLink="/notification/list">Regresar</button>
+  </div>
+  <br>
+
+  <mat-divider></mat-divider>
+
+  <form #searchForm="ngForm">
+    <mat-form-field>
+      <mat-select multiple name="channels" placeholder="Canal" [(ngModel)]="channelIds">
+        <mat-option *ngFor="let channel of channels" [value]="channel.channelId">
+          {{ channel.channel }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="margin-select">
+      <mat-select multiple name="locals" [(ngModel)]="localIds" placeholder="Local" #localSelect="ngModel">
+        <!--<mat-option disabled="disabled" class="filter-option">
+          <input type="checkbox" (click)="selectAll(checkAll.checked, localSelect, locals)" #checkAll>Todos
+      </mat-option>-->
+        <mat-option *ngFor="let local of locals" [value]="local.localId">
+          {{ local.local }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="margin-select">
+      <mat-select name="status" placeholder="Estado" [(ngModel)]="enabled">
+        <mat-option *ngFor="let status of statuses" [value]="status.value">
+          {{ status.status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button color="primary" (click)="search()">Buscar</button>
+    <button mat-button color="primary" (click)="onClean(searchForm)">Limpiar</button>
+  </form>
+</div>
+
+<div class="table-container">
+  <mat-table #table [dataSource]="dataSource" (matSortChange)="sortData($event)" matSort class="mat-cell">
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Titulo</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.title}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="channel">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Canal</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.channel}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="validity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Validez</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.validity | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="local">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Local</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.local}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="enabled">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.enabled ? 'Habilitado' : 'Inhabilitado'}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+  <!--<div class="no-results" *ngIf="dataSource.length == 0">
+    No se encontraron resultados.
+  </div>-->
+
+  <mat-paginator #paginator class="center" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    (page)="handlePage($event)">
+  </mat-paginator>
+</div>

@@ -1,0 +1,20 @@
+.form-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-content > * {
+    width: 100%;
+  }
+
+  .justify-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .spece-around {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }

@@ -1,0 +1,75 @@
+<h1 mat-dialog-title>Nueva notificación</h1>
+<form #myForm="ngForm" mat-dialog-content>
+  <div class="form-content">
+    <mat-form-field>
+      <input matInput name="title" ngModel placeholder="Titulo" #title="ngModel" required minlength="2">
+      <mat-error *ngIf="title.errors?.required">
+        Ingresa un titulo.
+      </mat-error>
+      <mat-error *ngIf="title.errors?.minlength">
+        El titulo debe contener minimo 2 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput name="message" ngModel placeholder="Mensaje" #message="ngModel" required minlength="2"></textarea>
+      <mat-error *ngIf="message.errors?.required">
+        Ingresa un mensaje.
+      </mat-error>
+      <mat-error *ngIf="message.errors?.minlength">
+        El mensaje debe contener minimo 2 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select multiple name="channels" ngModel placeholder="Canal" #_channels="ngModel"required>
+        <mat-option *ngFor="let channel of channels" [value]="channel.channelId">
+          {{ channel.channel }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="_channels.errors?.required">
+        Selecciona un canal.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select multiple name="locals" ngModel placeholder="Local" #_locals="ngModel" required>
+        <!--<mat-option disabled="disabled" class="filter-option">
+              <input type="checkbox" (click)="selectAll(checkAll.checked, locals, locals)" #checkAll>Todos
+          </mat-option>-->
+        <mat-option *ngFor="let local of locals" [value]="local.localId">
+          {{ local.local }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="_locals.errors?.required">
+        Selecciona un local.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox name="enabled" [ngModel]="true" #enabled="ngModel">Habilitado</mat-checkbox>
+    <mat-checkbox name="read" ngModel>Leido</mat-checkbox>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="dp" placeholder="Fecha" name="date" ngModel #date="ngModel" required>
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+      <mat-error *ngIf="date.errors?.required">
+        Selecciona una fecha.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select name="hours" placeholder="Hora" ngModel #_hours="ngModel" required>
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="_hours.errors?.required">
+        Selecciona una hora.
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form>
+<div mat-dialog-actions class="justify-right">
+  <button mat-button (click)="onClose()">Cancelar</button>
+  <button mat-flat-button color="primary" [disabled]="!myForm.valid" (click)="onSubmit(myForm)" cdkFocusInitial>Guardar</button>
+</div>

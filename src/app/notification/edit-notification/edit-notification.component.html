@@ -1,0 +1,73 @@
+<h1 mat-dialog-title>Editar notificación</h1>
+<form [formGroup]="myForm" mat-dialog-content>
+  <div class="form-content">
+    <mat-form-field>
+      <input matInput name="title" placeholder="Titulo" formControlName="title">
+      <mat-error *ngIf="myForm.get('title').hasError('required')">
+        Ingresa un titulo.
+      </mat-error>
+      <mat-error *ngIf="myForm.get('title').hasError('minlength')">
+        El titulo debe contener minimo 2 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput name="message" placeholder="Mensaje" formControlName="message"></textarea>
+      <mat-error *ngIf="myForm.get('message').hasError('required')">
+        Ingresa un mensaje.
+      </mat-error>
+      <mat-error *ngIf="myForm.get('message').hasError('minlength')">
+        El mensaje debe contener minimo 2 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select multiple name="channels" placeholder="Canal" formControlName="channels">
+        <mat-option *ngFor="let channel of channels" [value]="channel.channelId">
+          {{ channel.channel }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="myForm.get('channels').hasError('required')">
+        Selecciona un canal.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select multiple name="locals" placeholder="Local" formControlName="locals">
+        <mat-option *ngFor="let local of locals" [value]="local.localId">
+          {{ local.local }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="myForm.get('locals').hasError('required')">
+        Selecciona un local.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox name="enabled" formControlName="enabled">Habilitado</mat-checkbox>
+    <mat-checkbox name="read" formControlName="read">Leido</mat-checkbox>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="dp" placeholder="Fecha" name="date" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+      <mat-error *ngIf="myForm.get('date').hasError('required')">
+        Selecciona una fecha.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select name="hours" placeholder="Hora" formControlName="hours">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="myForm.get('hours').hasError('required')">
+        Selecciona una hora.
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form>
+<div mat-dialog-actions class="justify-right">
+  <button mat-button (click)="onClose()">Cancelar</button>
+  <button mat-flat-button color="primary" [disabled]="!myForm.valid" (click)="onSubmit()" cdkFocusInitial>Guardar</button>
+</div>

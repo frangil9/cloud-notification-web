@@ -1,0 +1,59 @@
+<div class="content-header">
+  <div class="align-header">
+    <div class="subtitle">
+      Administrar Notificaciones
+    </div>
+    <button mat-flat-button color="primary" (click)="openAddNotification()">Crear Notificación</button>
+  </div>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <button mat-button color="primary" routerLink="/notification/details">Ver detalle</button>
+</div>
+
+<div class="table-container">
+  <mat-table #table [dataSource]="dataSource" (matSortChange)="sortData($event)" matSort class="mat-cell">
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Titulo</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.title}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="message">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Mensaje</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.message}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="validity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Validez</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.validity | date: 'dd/MM/yyyy HH:mm'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="enabled">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.enabled ? 'Habilitado' : 'Inhabilitado'}}</mat-cell>
+    </ng-container>
+
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent">
+          <mat-icon aria-label="Edit" (click)="openEditNotification(row.notificationId)">edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+  <!--<div class="no-results" *ngIf="dataSource.length == 0">
+    No se encontraron resultados.
+  </div>-->
+
+  <mat-paginator #paginator class="center" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    (page)="handlePage($event)">
+  </mat-paginator>
+</div>

@@ -1,0 +1,22 @@
+.header{
+    display: flex;
+    width: 100%;    
+    flex-direction: row;    
+    padding: 0.5rem;    
+    flex-wrap: nowrap;    
+    height: 10%;
+    justify-content: space-between;
+    align-items: center;    
+    background-color: #202121;
+}
+
+.text {
+    font-size: 18px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.22;
+    letter-spacing: 0.4px;
+    text-align: left;
+    color: #f9fbfd;
+    margin-left: 50px;
+}
